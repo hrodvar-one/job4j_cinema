@@ -1,13 +1,16 @@
 package ru.job4j.cinema.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.job4j.cinema.model.Film;
-import ru.job4j.cinema.service.FilmService;
+import org.springframework.web.bind.annotation.RequestMapping;
+import ru.job4j.cinema.dto.FilmDto;
+import ru.job4j.cinema.service.film.FilmService;
 
 import java.util.List;
 
 @Controller
+@RequestMapping("/films")
 public class FilmController {
 
     private final FilmService filmService;
@@ -16,8 +19,9 @@ public class FilmController {
         this.filmService = filmService;
     }
 
-    @GetMapping("/films")
-    public List<Film> getAll() {
-        return filmService.getAll();
+    @GetMapping
+    public String getAll(Model model) {
+        model.addAttribute("films", filmService.getAll());
+        return "films/filmlist";
     }
 }

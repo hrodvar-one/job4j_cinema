@@ -1,22 +1,6 @@
 package ru.job4j.cinema.dto;
 
-import java.util.Objects;
-
 public class FilmDto {
-
-//    private final int id;
-//
-//    private final String name;
-//
-//    private final String description;
-//
-//    private final int year;
-//
-//    private final int minimalAge;
-//
-//    private final int durationInMinutes;
-//
-//    private final String genre;
 
     private int id;
 
@@ -32,15 +16,22 @@ public class FilmDto {
 
     private String genre;
 
-//    public FilmDto(int id, String name, String description, int year, int minimalAge, int durationInMinutes, String genre) {
-//        this.id = id;
-//        this.name = name;
-//        this.description = description;
-//        this.year = year;
-//        this.minimalAge = minimalAge;
-//        this.durationInMinutes = durationInMinutes;
-//        this.genre = genre;
-//    }
+    private String posterPath;
+
+    private int fileId;
+
+    public FilmDto(int id, String name, String description, int year, int minimalAge, int durationInMinutes,
+                   String genre, String posterPath, int fileId) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.year = year;
+        this.minimalAge = minimalAge;
+        this.durationInMinutes = durationInMinutes;
+        this.genre = genre;
+        this.posterPath = posterPath;
+        this.fileId = fileId;
+    }
 
     public int getId() {
         return id;
@@ -68,6 +59,14 @@ public class FilmDto {
 
     public String getGenre() {
         return genre;
+    }
+
+    public String getPosterPath() {
+        return posterPath;
+    }
+
+    public int getFileId() {
+        return fileId;
     }
 
     public void setId(int id) {
@@ -98,17 +97,11 @@ public class FilmDto {
         this.genre = genre;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        FilmDto filmDto = (FilmDto) o;
-        return id == filmDto.id && year == filmDto.year && minimalAge == filmDto.minimalAge && durationInMinutes == filmDto.durationInMinutes && Objects.equals(name, filmDto.name) && Objects.equals(description, filmDto.description) && Objects.equals(genre, filmDto.genre);
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, description, year, minimalAge, durationInMinutes, genre);
+    public void setFileId(int fileId) {
+        this.fileId = fileId;
     }
 }
