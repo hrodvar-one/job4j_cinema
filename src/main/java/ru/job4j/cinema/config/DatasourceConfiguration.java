@@ -55,7 +55,6 @@ public class DatasourceConfiguration {
                     public Object toDatabaseParam(LocalDateTime value) {
                         return value == null ? null : Timestamp.valueOf(value);
                     }
-
                 });
             }
         };

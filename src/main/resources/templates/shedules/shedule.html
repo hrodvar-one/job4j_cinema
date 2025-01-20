@@ -10,19 +10,39 @@
     <script th:src="@{/js/code.jquery.com_jquery-3.7.0.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
 
-    <title>Кинотеатр</title>
+    <title>Расписание сеансов</title>
 </head>
 <body>
-<div class="container-fluid p-0">
-    <header th:insert="blocks/header :: header"></header>
-    <div class="container mt-2">
-        <h3>Расписание</h3>
-        <ul>
-            <!--            <li><a th:href="@{/vacancies}">Расписание</a></li>-->
-            <!--            <li><a th:href="@{/candidates}">Кинотека</a></li>-->
-        </ul>
-    </div>
-    <footer th:insert="blocks/footer :: footer"></footer>
+<div th:replace="blocks/header :: header"></div>
+<div class="container mt-4">
+    <h1>Расписание</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Фильм</th>
+            <th>Зал</th>
+            <th>Начало</th>
+            <th>Конец</th>
+            <th>Цена</th>
+            <th>Действие</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="filmSession : ${filmSessions}">
+<!--            <td th:text="${filmSession.filmName}"></td>-->
+<!--            <td th:text="${filmSession.hallName}"></td>-->
+            <td th:text="${filmSession.filmId}"></td>
+            <td th:text="${filmSession.hallsId}"></td>
+            <td th:text="${filmSession.startTime}"></td>
+            <td th:text="${filmSession.endTime}"></td>
+            <td th:text="${filmSession.price}"></td>
+            <td>
+                <a th:href="@{/tickets/buy/{id}(id=${filmSession.id})}" class="btn btn-primary">Купить</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
+<div th:replace="blocks/footer :: footer"></div>
 </body>
 </html>
