@@ -1,17 +1,6 @@
-package ru.job4j.cinema.model;
+package ru.job4j.cinema.dto;
 
-import java.util.Map;
-import java.util.Objects;
-
-public class Ticket {
-
-    public static final Map<String, String> COLUMN_MAPPING = Map.of(
-            "id", "id",
-            "session_id", "sessionId",
-            "row_number", "rowNumber",
-            "place_number", "placeNumber",
-            "user_id", "userId"
-    );
+public class TicketDto {
 
     private int id;
 
@@ -23,7 +12,7 @@ public class Ticket {
 
     private int userId;
 
-    public Ticket(int id, int sessionId, int rowNumber, int placeNumber, int userId) {
+    public TicketDto(int id, int sessionId, int rowNumber, int placeNumber, int userId) {
         this.id = id;
         this.sessionId = sessionId;
         this.rowNumber = rowNumber;
@@ -69,19 +58,5 @@ public class Ticket {
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Ticket ticket = (Ticket) o;
-        return id == ticket.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
     }
 }

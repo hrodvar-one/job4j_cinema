@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="RU">
+<head>
+    <title>Мои билеты</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div th:replace="blocks/header :: header"></div>
+<div class="container mt-4">
+    <h1>Мои билеты</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Фильм</th>
+            <th>Дата</th>
+            <th>Ряд</th>
+            <th>Место</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ticket : ${tickets}">
+            <td th:text="${ticket.filmName}"></td>
+            <td th:text="${ticket.sessionDate}"></td>
+            <td th:text="${ticket.row}"></td>
+            <td th:text="${ticket.place}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:replace="blocks/footer :: footer"></div>
+</body>
+</html>

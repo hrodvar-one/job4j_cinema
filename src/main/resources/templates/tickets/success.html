@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="RU">
+<head>
+    <title>Успешная покупка</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div th:replace="blocks/header :: header"></div>
+<div class="container mt-4 text-center">
+    <h1>Успех!</h1>
+    <p>Вы успешно приобрели билет на ряд <b th:text="${row}"></b>, место <b th:text="${place}"></b>.</p>
+    <a th:href="@{/sessions}" class="btn btn-primary">Вернуться к расписанию</a>
+</div>
+<div th:replace="blocks/footer :: footer"></div>
+</body>
+</html>
