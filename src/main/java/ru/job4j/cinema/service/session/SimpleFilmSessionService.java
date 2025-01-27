@@ -22,17 +22,15 @@ public class SimpleFilmSessionService implements FilmSessionService {
     private final HallRepository hallRepository;
     private final TicketRepository ticketRepository;
 
-    public SimpleFilmSessionService(FilmSessionRepository filmSessionRepository, FilmRepository filmRepository, HallRepository hallRepository, TicketRepository ticketRepository) {
+    public SimpleFilmSessionService(FilmSessionRepository filmSessionRepository,
+                                    FilmRepository filmRepository,
+                                    HallRepository hallRepository,
+                                    TicketRepository ticketRepository) {
         this.filmSessionRepository = filmSessionRepository;
         this.filmRepository = filmRepository;
         this.hallRepository = hallRepository;
         this.ticketRepository = ticketRepository;
     }
-
-//    @Override
-//    public List<FilmSession> getAll() {
-//        return filmSessionRepository.getAll();
-//    }
 
     @Override
     public List<FilmSessionDto> getAll() {
@@ -65,8 +63,31 @@ public class SimpleFilmSessionService implements FilmSessionService {
     }
 
     @Override
-    public Optional<FilmSession> getById(int id) {
-        return filmSessionRepository.getById(id);
+    public Optional<FilmSessionDto> getById(int id) {
+//        Optional<FilmSession> filmSession = filmSessionRepository.getById(id);
+//        Optional<Film> film = filmRepository.getById(filmSession.getById()).orElseThrow();
+//        Optional<Hall> hall = hallRepository.getById(filmSession.getById()).orElseThrow();
+//        return new FilmSessionDto(
+//                filmSession.getId(),
+//                film.getName(),
+//                hall.getName(),
+//                filmSession.getStartTime(),
+//                filmSession.getEndTime(),
+//                filmSession.getPrice()
+//        );
+
+        return filmSessionRepository.getById(id).map(session -> {
+            var film = filmRepository.getById(session.getFilmId()).orElseThrow();
+            var hall = hallRepository.getById(session.getHallsId()).orElseThrow();
+            return new FilmSessionDto(
+                    session.getId(),
+                    film.getName(),
+                    hall.getName(),
+                    session.getStartTime(),
+                    session.getEndTime(),
+                    session.getPrice()
+            );
+        });
     }
 
     @Override

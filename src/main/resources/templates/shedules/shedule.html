@@ -37,7 +37,8 @@
             <td th:text="${filmSession.endTime}"></td>
             <td th:text="${filmSession.price}"></td>
             <td>
-                <a th:href="@{/tickets/buy/{id}(id=${filmSession.id})}" class="btn btn-primary">Купить билет</a>
+<!--                <a th:href="@{/tickets/buy/{id}(id=${filmSession.id})}" class="btn btn-primary">Купить билет</a>-->
+                <a th:href="@{/sessions/{id}(id=${filmSession.id})}" class="btn btn-primary">Купить билет</a>
             </td>
         </tr>
         </tbody>

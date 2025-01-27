@@ -2,10 +2,7 @@ package ru.job4j.cinema.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.job4j.cinema.dto.TicketDto;
 import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.service.ticket.TicketService;
@@ -48,5 +45,12 @@ public class TicketController {
 
         model.addAttribute("ticket", ticketDto);
         return "tickets/success";
+//        return "tickets/tickets";
+    }
+
+    @GetMapping("/buy/{id}")
+    public String getById(Model model, @PathVariable int id) {
+
+        return "tickets/buy";
     }
 }

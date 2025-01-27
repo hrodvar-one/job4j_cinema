@@ -9,6 +9,7 @@ import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 import ru.job4j.cinema.model.Ticket;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -46,7 +47,12 @@ public class Sql2oTicketRepository implements TicketRepository {
 
     @Override
     public Optional<Ticket> getById(int id) {
-        return Optional.empty();
+        try (Connection connection = sql2o.open()) {
+            Query query = connection.createQuery("SELECT * FROM tickets WHERE id = :id");
+            query.addParameter("id", id);
+            Ticket ticket = query.setColumnMappings(Ticket.COLUMN_MAPPING).executeAndFetchFirst(Ticket.class);
+            return Optional.ofNullable(ticket);
+        }
     }
 
     @Override
@@ -62,6 +68,37 @@ public class Sql2oTicketRepository implements TicketRepository {
                     .addParameter("rowNumber", rowNumber)
                     .addParameter("placeNumber", placeNumber);
             return query.executeScalar(Boolean.class);
+        }
+    }
+
+    @Override
+    public List<Ticket> getTicketsBySessionId(int sessionId) {
+        try (Connection connection = sql2o.open()) {
+            String sql = "SELECT id, session_id AS sessionId, row_number AS rowNumber, place_number AS placeNumber, user_id AS userId "
+                    + "FROM tickets WHERE session_id = :sessionId";
+            return connection.createQuery(sql)
+                    .addParameter("sessionId", sessionId)
+                    .executeAndFetch(Ticket.class);
+        }
+    }
+
+    @Override
+    public List<Integer> getRowsBySessionId(int sessionId) {
+        try (Connection connection = sql2o.open()) {
+            String sql = "SELECT DISTINCT row_number FROM tickets WHERE session_id = :sessionId";
+            return connection.createQuery(sql)
+                    .addParameter("sessionId", sessionId)
+                    .executeAndFetch(Integer.class);
+        }
+    }
+
+    @Override
+    public List<Integer> getPlacesBySessionId(int sessionId) {
+        try (Connection connection = sql2o.open()) {
+            String sql = "SELECT DISTINCT place_number FROM tickets WHERE session_id = :sessionId";
+            return connection.createQuery(sql)
+                    .addParameter("sessionId", sessionId)
+                    .executeAndFetch(Integer.class);
         }
     }
 }

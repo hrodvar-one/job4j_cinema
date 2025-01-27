@@ -12,6 +12,10 @@ public class TicketDto {
 
     private int userId;
 
+    public TicketDto() {
+
+    }
+
     public TicketDto(int id, int sessionId, int rowNumber, int placeNumber, int userId) {
         this.id = id;
         this.sessionId = sessionId;
