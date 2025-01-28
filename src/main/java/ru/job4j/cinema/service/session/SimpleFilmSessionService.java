@@ -32,6 +32,42 @@ public class SimpleFilmSessionService implements FilmSessionService {
         this.ticketRepository = ticketRepository;
     }
 
+//    @Override
+//    public List<FilmSessionDto> getAll() {
+//        List<FilmSession> filmSessions = filmSessionRepository.getAll();
+//
+//        // Преобразуем List<FilmSession> в List<FilmSessionDto>
+//        return filmSessions.stream()
+//                .map(filmSession -> {
+//                    // Извлекаем filmName и hallName из Optional
+//                    String filmName = filmRepository.getById(filmSession.getFilmId())
+//                            .map(Film::getName) // Извлекаем имя из Optional<Film>
+//                            .orElse("Unknown Film"); // Значение по умолчанию, если Film не найден
+//
+//                    // Проверка вывода имени зала
+//                    System.out.println("ID зала: " + filmSession.getHallsId());
+//
+//                    String hallName = hallRepository.getById(filmSession.getHallsId())
+//                            .map(Hall::getName) // Извлекаем имя из Optional<Hall>
+//                            .orElse("Unknown Hall"); // Значение по умолчанию, если Hall не найден
+//
+//                    // Проверка вывода имени зала
+//                    System.out.println("Имя зала: " + hallName);
+//
+//                    // Создаем DTO
+//                    FilmSessionDto dto = new FilmSessionDto();
+//                    dto.setId(filmSession.getId());
+//                    dto.setFilmName(filmName);
+//                    dto.setHallName(hallName);
+//                    dto.setStartTime(filmSession.getStartTime());
+//                    dto.setEndTime(filmSession.getEndTime());
+//                    dto.setPrice(filmSession.getPrice());
+//
+//                    return dto; // Возвращаем готовый DTO
+//                })
+//                .collect(Collectors.toList()); // Сохраняем все DTO в список
+//    }
+
     @Override
     public List<FilmSessionDto> getAll() {
         List<FilmSession> filmSessions = filmSessionRepository.getAll();
@@ -44,9 +80,15 @@ public class SimpleFilmSessionService implements FilmSessionService {
                             .map(Film::getName) // Извлекаем имя из Optional<Film>
                             .orElse("Unknown Film"); // Значение по умолчанию, если Film не найден
 
+//                    // Проверка вывода имени зала
+//                    System.out.println("ID зала: " + filmSession.getHallsId());
+
                     String hallName = hallRepository.getById(filmSession.getHallsId())
                             .map(Hall::getName) // Извлекаем имя из Optional<Hall>
                             .orElse("Unknown Hall"); // Значение по умолчанию, если Hall не найден
+
+//                    // Проверка вывода имени зала
+//                    System.out.println("Имя зала: " + hallName);
 
                     // Создаем DTO
                     FilmSessionDto dto = new FilmSessionDto();
@@ -57,6 +99,19 @@ public class SimpleFilmSessionService implements FilmSessionService {
                     dto.setEndTime(filmSession.getEndTime());
                     dto.setPrice(filmSession.getPrice());
 
+//                    // Проверка вывода полной DTO
+//                    System.out.println("Полная DTO: " + dto.getId()
+//                            + " "
+//                            + dto.getFilmName()
+//                            + " "
+//                            + dto.getHallName()
+//                            + " "
+//                            + dto.getStartTime()
+//                            + " "
+//                            + dto.getEndTime()
+//                            + " "
+//                            + dto.getPrice());
+
                     return dto; // Возвращаем готовый DTO
                 })
                 .collect(Collectors.toList()); // Сохраняем все DTO в список
@@ -64,21 +119,13 @@ public class SimpleFilmSessionService implements FilmSessionService {
 
     @Override
     public Optional<FilmSessionDto> getById(int id) {
-//        Optional<FilmSession> filmSession = filmSessionRepository.getById(id);
-//        Optional<Film> film = filmRepository.getById(filmSession.getById()).orElseThrow();
-//        Optional<Hall> hall = hallRepository.getById(filmSession.getById()).orElseThrow();
-//        return new FilmSessionDto(
-//                filmSession.getId(),
-//                film.getName(),
-//                hall.getName(),
-//                filmSession.getStartTime(),
-//                filmSession.getEndTime(),
-//                filmSession.getPrice()
-//        );
-
         return filmSessionRepository.getById(id).map(session -> {
             var film = filmRepository.getById(session.getFilmId()).orElseThrow();
             var hall = hallRepository.getById(session.getHallsId()).orElseThrow();
+
+            // Проверка hall
+            System.out.println(hall);
+
             return new FilmSessionDto(
                     session.getId(),
                     film.getName(),
@@ -88,6 +135,11 @@ public class SimpleFilmSessionService implements FilmSessionService {
                     session.getPrice()
             );
         });
+    }
+
+    @Override
+    public Optional<FilmSession> getFilmSessionById(int id) {
+        return filmSessionRepository.getById(id);
     }
 
     @Override

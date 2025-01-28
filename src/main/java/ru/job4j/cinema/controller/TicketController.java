@@ -20,10 +20,8 @@ public class TicketController {
     }
 
     @PostMapping("/buy")
-    public String save(
-            @RequestBody TicketDto ticketDto,
-            Model model
-    ) {
+//    public String save(@RequestBody TicketDto ticketDto, Model model) {
+    public String save(@ModelAttribute TicketDto ticketDto, Model model) {
         Optional<Ticket> ticketOptional = ticketService.save(
                 ticketDto.getSessionId(),
                 ticketDto.getRowNumber(),
@@ -45,12 +43,27 @@ public class TicketController {
 
         model.addAttribute("ticket", ticketDto);
         return "tickets/success";
-//        return "tickets/tickets";
     }
 
-    @GetMapping("/buy/{id}")
-    public String getById(Model model, @PathVariable int id) {
+//    @PostMapping("/success")
+//    public String success(@RequestParam String row, @RequestParam String place, Model model) {
+//        model.addAttribute("row", row);
+//        model.addAttribute("place", place);
+//        return "tickets/success";
+//    }
 
-        return "tickets/buy";
-    }
+//    @PostMapping("/success")
+//    public String buyTicket(@ModelAttribute TicketDto ticketDto, Model model) {
+//        // Здесь можно обработать переданные данные
+//        // Например, сохранить билет в базе данных
+////        ticketService.save(ticketDto);
+//        ticketService.save(ticketDto.getSessionId(), ticketDto.getRowNumber(), ticketDto.getPlaceNumber(), ticketDto.getUserId());
+//        System.out.println("Билет куплен: " + ticketDto);
+//
+//        // Добавьте данные в модель, если нужно передать их на страницу
+//        model.addAttribute("ticket", ticketDto);
+//
+//        // Перенаправьте пользователя на страницу подтверждения
+//        return "tickets/success"; // Замените на имя вашей страницы
+//    }
 }

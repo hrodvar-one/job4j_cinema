@@ -1,16 +1,41 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" lang="RU">-->
+<!--<head>-->
+<!--    <title>Успешная покупка</title>-->
+<!--    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div th:replace="blocks/header :: header"></div>-->
+<!--<div class="container mt-4 text-center">-->
+<!--    <h1>Успех!</h1>-->
+<!--    <p>Вы успешно приобрели билет на ряд <b th:text="${row}"></b>, место <b th:text="${place}"></b>.</p>-->
+<!--    <a th:href="@{/sessions}" class="btn btn-primary">Вернуться к расписанию</a>-->
+<!--</div>-->
+<!--<div th:replace="blocks/footer :: footer"></div>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="RU">
+<html lang="en">
 <head>
-    <title>Успешная покупка</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Покупка успешна</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-<div th:replace="blocks/header :: header"></div>
-<div class="container mt-4 text-center">
-    <h1>Успех!</h1>
-    <p>Вы успешно приобрели билет на ряд <b th:text="${row}"></b>, место <b th:text="${place}"></b>.</p>
-    <a th:href="@{/sessions}" class="btn btn-primary">Вернуться к расписанию</a>
+<div class="container mt-5">
+    <h1 class="text-success">Покупка билета успешна!</h1>
+    <p>Спасибо за вашу покупку. Информация о вашем билете:</p>
+    <ul class="list-group">
+        <li class="list-group-item">
+            <strong>Ряд:</strong> <span th:text="${row}"></span>
+        </li>
+        <li class="list-group-item">
+            <strong>Место:</strong> <span th:text="${place}"></span>
+        </li>
+    </ul>
+    <a href="/" class="btn btn-primary mt-4">Вернуться на главную</a>
 </div>
-<div th:replace="blocks/footer :: footer"></div>
 </body>
 </html>

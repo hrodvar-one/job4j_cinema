@@ -14,5 +14,7 @@ public interface FilmSessionService {
 //    Optional<FilmSession> getById(int id);
     Optional<FilmSessionDto> getById(int id);
 
+    Optional<FilmSession> getFilmSessionById(int id);
+
     boolean isPlaceTaken(int sessionId, int rowNumber, int placeNumber);
 }

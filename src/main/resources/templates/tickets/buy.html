@@ -1,55 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns:th="http://www.thymeleaf.org" lang="RU">-->
-<!--<head>-->
-<!--    <title>Мои билеты</title>-->
-<!--    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">-->
-<!--</head>-->
-<!--<body>-->
-<!--<div th:replace="blocks/header :: header"></div>-->
-<!--<div class="container mt-4">-->
-<!--    <h1>Мои билеты</h1>-->
-<!--    <table class="table">-->
-<!--        <thead>-->
-<!--        <tr>-->
-<!--            <th>Фильм</th>-->
-<!--            <th>Дата</th>-->
-<!--            <th>Ряд</th>-->
-<!--            <th>Место</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-<!--        <tr>-->
-<!--            <td th:text="${filmName}"></td>-->
-<!--            <td th:text="${filmDate}"></td>-->
-<!--            <td th:text="${price}"></td>-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--    </table>-->
-<!--</div>-->
-<!--<div th:replace="blocks/footer :: footer"></div>-->
-<!--</body>-->
-<!--</html>-->
-
-<!--<form action="/tickets/buy" method="post">-->
-<!--    <label for="row">Выберите ряд:</label>-->
-<!--    <select id="row" name="row">-->
-<!--        <option value="">&#45;&#45;Выберите ряд&#45;&#45;</option>-->
-<!--        <th:block th:each="row : ${rows}">-->
-<!--            <option th:value="${row}" th:text="${row}"></option>-->
-<!--        </th:block>-->
-<!--    </select>-->
-
-<!--    <label for="place">Выберите место:</label>-->
-<!--    <select id="place" name="place">-->
-<!--        <option value="">&#45;&#45;Выберите место&#45;&#45;</option>-->
-<!--        <th:block th:each="place : ${places}">-->
-<!--            <option th:value="${place}" th:text="${place}"></option>-->
-<!--        </th:block>-->
-<!--    </select>-->
-
-<!--    <button type="submit">Купить билет</button>-->
-<!--</form>-->
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="RU">
 <head>
@@ -59,7 +7,7 @@
 <body>
 <div th:replace="blocks/header :: header"></div>
 <div class="container mt-4">
-    <h1>Мои билеты</h1>
+    <h1>Покупка билета</h1>
     <table class="table">
         <thead>
         <tr>
@@ -79,10 +27,17 @@
 
     <!-- Добавление формы выбора ряда и места -->
     <h2>Выберите ряд и место для покупки</h2>
+<!--    <form action="/tickets/buy" method="post" class="mt-4">-->
+
+    <input type="hidden" name="sessionId" th:value="${sessionId}">
+
+<!--    <form action="/tickets/success" method="post" class="mt-4">-->
     <form action="/tickets/buy" method="post" class="mt-4">
         <div class="mb-3">
-            <label for="row" class="form-label">Выберите ряд:</label>
-            <select id="row" name="row" class="form-select">
+<!--            <label for="row" class="form-label">Выберите ряд:</label>-->
+<!--            <select id="row" name="row" class="form-select">-->
+            <label for="rowNumber" class="form-label">Выберите ряд:</label>
+            <select id="rowNumber" name="row" class="form-select">
                 <option value="">--Выберите ряд--</option>
                 <th:block th:each="row : ${rows}">
                     <option th:value="${row}" th:text="${row}"></option>
@@ -91,8 +46,10 @@
         </div>
 
         <div class="mb-3">
-            <label for="place" class="form-label">Выберите место:</label>
-            <select id="place" name="place" class="form-select">
+<!--            <label for="place" class="form-label">Выберите место:</label>-->
+<!--            <select id="place" name="place" class="form-select">-->
+            <label for="placeNumber" class="form-label">Выберите место:</label>
+            <select id="placeNumber" name="place" class="form-select">
                 <option value="">--Выберите место--</option>
                 <th:block th:each="place : ${places}">
                     <option th:value="${place}" th:text="${place}"></option>

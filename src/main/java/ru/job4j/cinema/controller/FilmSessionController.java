@@ -142,42 +142,60 @@ public class FilmSessionController {
 //        return "tickets/buy";
 //    }
 
-//    @GetMapping("/{id}")
-//    public String getById(Model model, @PathVariable int id) {
-//        Optional<FilmSessionDto> filmSessionOptional = filmSessionService.getById(id);
-//
-//        // Проверка наличия FilmSession
-//        if (filmSessionOptional.isEmpty()) {
-//            model.addAttribute("message", "Данного сеанса не существует, выберите другой!");
-//            return "errors/404";
-//        }
-//
-//        FilmSessionDto filmSession = filmSessionOptional.get();
-//
-//        // Получение информации о зале
-//        Optional<Hall> hallOptional = hallService.getById(filmSession.getHallId());
-//        if (hallOptional.isEmpty()) {
-//            model.addAttribute("message", "Зал для данного сеанса не найден!");
-//            return "errors/404";
-//        }
-//
-//        Hall hall = hallOptional.get();
-//
-//        // Генерация рядов и мест
-//        List<Integer> rows = IntStream.rangeClosed(1, hall.getRowCount())
-//                .boxed()
-//                .toList();
-//        List<Integer> places = IntStream.rangeClosed(1, hall.getPlaceCount())
-//                .boxed()
-//                .toList();
-//
-//        // Добавление атрибутов в модель
-//        model.addAttribute("filmName", filmSession.getFilmName());
-//        model.addAttribute("filmDate", filmSession.getStartTime());
-//        model.addAttribute("price", filmSession.getPrice());
-//        model.addAttribute("rows", rows);
-//        model.addAttribute("places", places);
-//
-//        return "tickets/buy";
-//    }
+    @GetMapping("/{id}")
+    public String getById(Model model, @PathVariable int id) {
+        Optional<FilmSessionDto> filmSessionDtoOptional = filmSessionService.getById(id);
+
+        // Проверка наличия FilmSession
+        if (filmSessionDtoOptional.isEmpty()) {
+            model.addAttribute("message", "Данного сеанса не существует, выберите другой!");
+            return "errors/404";
+        }
+
+        FilmSessionDto filmSessionDto = filmSessionDtoOptional.get();
+
+        Optional<FilmSession> filmSessionOptional = filmSessionService.getFilmSessionById(id);
+
+        // Проверка наличия FilmSession
+        if (filmSessionOptional.isEmpty()) {
+            model.addAttribute("message", "Данного сеанса не существует, выберите другой!");
+            return "errors/404";
+        }
+
+        FilmSession filmSession = filmSessionOptional.get();
+
+        // Получение информации о зале
+        Optional<Hall> hallOptional = hallService.getById(filmSession.getId());
+
+        // Проверочная информация
+//        System.out.println("id зала = " + hallOptional + "\n" + "id сеанса = " + filmSession.getId());
+//        System.out.println("id зала = " + hallOptional.get().getId() + "\n" + "id сеанса = " + filmSession.getId());
+
+        if (hallOptional.isEmpty()) {
+            model.addAttribute("message", "Зал для данного сеанса не найден!");
+            return "errors/404";
+        }
+
+        Hall hall = hallOptional.get();
+
+        // Генерация рядов и мест
+        List<Integer> rows = IntStream.rangeClosed(1, hall.getRowCount())
+                .boxed()
+                .toList();
+        List<Integer> places = IntStream.rangeClosed(1, hall.getPlaceCount())
+                .boxed()
+                .toList();
+
+        // Добавление атрибутов в модель
+
+        model.addAttribute("sessionId", filmSessionDto.getId());
+
+        model.addAttribute("filmName", filmSessionDto.getFilmName());
+        model.addAttribute("filmDate", filmSessionDto.getStartTime());
+        model.addAttribute("price", filmSessionDto.getPrice());
+        model.addAttribute("rows", rows);
+        model.addAttribute("places", places);
+
+        return "tickets/buy";
+    }
 }
