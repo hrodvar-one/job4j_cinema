@@ -142,8 +142,8 @@ public class SimpleFilmSessionService implements FilmSessionService {
         return filmSessionRepository.getById(id);
     }
 
-    @Override
-    public boolean isPlaceTaken(int sessionId, int rowNumber, int placeNumber) {
-        return ticketRepository.isPlaceTaken(sessionId, rowNumber, placeNumber);
-    }
+//    @Override
+//    public boolean isPlaceTaken(int sessionId, int rowNumber, int placeNumber) {
+//        return ticketRepository.isPlaceTaken(sessionId, rowNumber, placeNumber);
+//    }
 }

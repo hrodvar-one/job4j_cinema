@@ -55,21 +55,21 @@ public class Sql2oTicketRepository implements TicketRepository {
         }
     }
 
-    @Override
-    public boolean isPlaceTaken(int sessionId, int rowNumber, int placeNumber) {
-        try (Connection connection = sql2o.open()) {
-            String sql = """
-                      SELECT COUNT(*) > 0
-                      FROM tickets
-                      WHERE session_id = :sessionId AND row_number = :rowNumber AND place_number = :placeNumber
-                      """;
-            Query query = connection.createQuery(sql)
-                    .addParameter("sessionId", sessionId)
-                    .addParameter("rowNumber", rowNumber)
-                    .addParameter("placeNumber", placeNumber);
-            return query.executeScalar(Boolean.class);
-        }
-    }
+//    @Override
+//    public boolean isPlaceTaken(int sessionId, int rowNumber, int placeNumber) {
+//        try (Connection connection = sql2o.open()) {
+//            String sql = """
+//                      SELECT COUNT(*) > 0
+//                      FROM tickets
+//                      WHERE session_id = :sessionId AND row_number = :rowNumber AND place_number = :placeNumber
+//                      """;
+//            Query query = connection.createQuery(sql)
+//                    .addParameter("sessionId", sessionId)
+//                    .addParameter("rowNumber", rowNumber)
+//                    .addParameter("placeNumber", placeNumber);
+//            return query.executeScalar(Boolean.class);
+//        }
+//    }
 
     @Override
     public List<Ticket> getTicketsBySessionId(int sessionId) {
@@ -79,6 +79,23 @@ public class Sql2oTicketRepository implements TicketRepository {
             return connection.createQuery(sql)
                     .addParameter("sessionId", sessionId)
                     .executeAndFetch(Ticket.class);
+        }
+    }
+
+    /**
+     * Проверяет, занято ли место в указанном сеансе.
+     */
+    public boolean isSeatAvailable(int sessionId, int row, int place) {
+//        String sql = "SELECT COUNT(*) FROM tickets WHERE session_id = :sessionId AND row = :row AND place = :place";
+        String sql = "SELECT COUNT(*) FROM tickets WHERE session_id = :sessionId AND row_number = :row AND place_number = :place";
+
+        try (Connection con = sql2o.open()) {
+            Integer count = con.createQuery(sql)
+                    .addParameter("sessionId", sessionId)
+                    .addParameter("row", row)
+                    .addParameter("place", place)
+                    .executeScalar(Integer.class);
+            return count != null && count == 0; // Если 0 записей, значит место свободно
         }
     }
 

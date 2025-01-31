@@ -164,12 +164,18 @@ public class FilmSessionController {
 
         FilmSession filmSession = filmSessionOptional.get();
 
+        int hallId = filmSession.getHallsId();
+
+        // Здесь ошибка
         // Получение информации о зале
-        Optional<Hall> hallOptional = hallService.getById(filmSession.getId());
+        // сюда надо передавать id зала информацию о котором мы хотим получить, а не id сеанса
+//        Optional<Hall> hallOptional = hallService.getById(filmSession.getId());
+        Optional<Hall> hallOptional = hallService.getById(hallId);
 
         // Проверочная информация
 //        System.out.println("id зала = " + hallOptional + "\n" + "id сеанса = " + filmSession.getId());
 //        System.out.println("id зала = " + hallOptional.get().getId() + "\n" + "id сеанса = " + filmSession.getId());
+//        System.out.println("id зала = " + hallOptional.get().getId() + " " + "id сеанса = " + filmSession.getId());
 
         if (hallOptional.isEmpty()) {
             model.addAttribute("message", "Зал для данного сеанса не найден!");

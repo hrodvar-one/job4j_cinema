@@ -58,7 +58,13 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Купить билет</button>
+        <a href="/sessions" class="btn btn-secondary">Отменить</a>
     </form>
+
+    <!-- Если пользователь не авторизован, предлагаем войти -->
+    <div th:if="${user.fullName == 'Гость'}">
+        <p>Для покупки билета <a href="/users/login">Войдите в систему</a>.</p>
+    </div>
 </div>
 <div th:replace="blocks/footer :: footer"></div>
 </body>

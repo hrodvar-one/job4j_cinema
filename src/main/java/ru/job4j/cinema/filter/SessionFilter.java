@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Component
-//@Order(2)
+@Order(2)
 public class SessionFilter extends HttpFilter {
 
     @Override
