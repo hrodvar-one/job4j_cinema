@@ -23,8 +23,30 @@ public class Sql2oTicketRepository implements TicketRepository {
         this.sql2o = sql2o;
     }
 
+//    @Override
+//    public Optional<Ticket> save(Ticket ticket) {
+//        try (Connection connection = sql2o.open()) {
+//            String sql = """
+//
+//                    INSERT INTO tickets (session_id, row_number, place_number, user_id)
+//                      VALUES (:sessionId, :rowNumber, :placeNumber, :userId)
+//                      """;
+//            Query query = connection.createQuery(sql, true)
+//                    .addParameter("filmSessionId", ticket.getSessionId())
+//                    .addParameter("rowNumber", ticket.getRowNumber())
+//                    .addParameter("placeNumber", ticket.getPlaceNumber())
+//                    .addParameter("userId", ticket.getUserId());
+//            int generatedId = query.executeUpdate().getKey(Integer.class);
+//            ticket.setId(generatedId);
+//            return Optional.of(ticket);
+//        } catch (Sql2oException e) {
+//            LOG.error("Данное место занято, купите другой билет!");
+//        }
+//        return Optional.empty();
+//    }
+
     @Override
-    public Optional<Ticket> save(Ticket ticket) {
+    public Optional<Ticket> save(int sessionId, int row, int place, int userId) {
         try (Connection connection = sql2o.open()) {
             String sql = """
                       
@@ -32,11 +54,14 @@ public class Sql2oTicketRepository implements TicketRepository {
                       VALUES (:sessionId, :rowNumber, :placeNumber, :userId)
                       """;
             Query query = connection.createQuery(sql, true)
-                    .addParameter("filmSessionId", ticket.getSessionId())
-                    .addParameter("rowNumber", ticket.getRowNumber())
-                    .addParameter("placeNumber", ticket.getPlaceNumber())
-                    .addParameter("userId", ticket.getUserId());
+                    .addParameter("filmSessionId", sessionId)
+                    .addParameter("rowNumber", row)
+                    .addParameter("placeNumber", place)
+                    .addParameter("userId", userId);
             int generatedId = query.executeUpdate().getKey(Integer.class);
+
+            Ticket ticket = new Ticket(generatedId, sessionId, row, place, userId);
+
             ticket.setId(generatedId);
             return Optional.of(ticket);
         } catch (Sql2oException e) {
@@ -54,6 +79,28 @@ public class Sql2oTicketRepository implements TicketRepository {
             return Optional.ofNullable(ticket);
         }
     }
+
+    @Override
+    public boolean isSeatAvailable(int sessionId, int row, int place, int userId) {
+        try (Connection connection = sql2o.open()) {
+            String sql = """
+                      SELECT COUNT(*) > 0
+                      FROM tickets
+                      WHERE session_id = :sessionId AND row_number = :rowNumber AND place_number = :placeNumber AND user_id = :userId
+                      """;
+            Query query = connection.createQuery(sql)
+                    .addParameter("sessionId", sessionId)
+                    .addParameter("rowNumber", row)
+                    .addParameter("placeNumber", place)
+                    .addParameter("userId", userId);
+            return query.executeScalar(Boolean.class);
+        }
+    }
+
+//    @Override
+//    public boolean isSeatAvailable(int sessionId, int row, int place, int userId) {
+//        return false;
+//    }
 
 //    @Override
 //    public boolean isPlaceTaken(int sessionId, int rowNumber, int placeNumber) {

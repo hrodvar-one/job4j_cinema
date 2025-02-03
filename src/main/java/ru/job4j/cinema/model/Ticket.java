@@ -23,6 +23,13 @@ public class Ticket {
 
     private int userId;
 
+    public Ticket(int sessionId, int rowNumber, int placeNumber, int userId) {
+        this.sessionId = sessionId;
+        this.rowNumber = rowNumber;
+        this.placeNumber = placeNumber;
+        this.userId = userId;
+    }
+
     public Ticket(int id, int sessionId, int rowNumber, int placeNumber, int userId) {
         this.id = id;
         this.sessionId = sessionId;

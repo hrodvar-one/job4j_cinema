@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.*;
 import ru.job4j.cinema.dto.TicketDto;
 import ru.job4j.cinema.model.FilmSession;
 import ru.job4j.cinema.model.Ticket;
+import ru.job4j.cinema.model.User;
 import ru.job4j.cinema.service.session.FilmSessionService;
 import ru.job4j.cinema.service.ticket.TicketService;
 
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Controller
@@ -49,11 +51,46 @@ public class TicketController {
 //        return "tickets/success";
 //    }
 
+//    @PostMapping("/buy")
+//    public String buyTicket(@RequestParam("sessionId") int sessionId,
+//                            @RequestParam("row") int row,
+//                            @RequestParam("place") int place,
+//                            Model model) {
+//
+//        // Проверка существования сеанса
+//        Optional<FilmSession> filmSessionOptional = filmSessionService.getFilmSessionById(sessionId);
+//        if (filmSessionOptional.isEmpty()) {
+//            model.addAttribute("message", "Данный сеанс не найден!");
+//            return "errors/404";
+//        }
+//
+//        // Проверка, доступно ли место
+//        boolean isAvailable = ticketService.isSeatAvailable(sessionId, row, place);
+//        if (!isAvailable) {
+//            model.addAttribute("message", "Выбранное место уже занято, выберите другое!");
+//            return "errors/404";
+//        }
+//
+//        // Создание билета
+//        Ticket ticket = new Ticket(sessionId, row, place);
+//        ticketService.save(ticket);
+//
+//        // Перенаправление на страницу успешной покупки
+//        return "redirect:/tickets/success";
+//    }
+
     @PostMapping("/buy")
     public String buyTicket(@RequestParam("sessionId") int sessionId,
                             @RequestParam("row") int row,
                             @RequestParam("place") int place,
+                            @RequestParam("userId") int userId,
                             Model model) {
+
+//        // Получаем пользователя из сессии
+//        User user = (User) session.getAttribute("user");
+//        if (user == null || user.getId() == null) {
+//            return "redirect:/users/login"; // Перенаправляем на авторизацию, если не вошёл
+//        }
 
         // Проверка существования сеанса
         Optional<FilmSession> filmSessionOptional = filmSessionService.getFilmSessionById(sessionId);
@@ -63,15 +100,19 @@ public class TicketController {
         }
 
         // Проверка, доступно ли место
-        boolean isAvailable = ticketService.isSeatAvailable(sessionId, row, place);
+        boolean isAvailable = ticketService.isSeatAvailable(sessionId, row, place, userId);
         if (!isAvailable) {
             model.addAttribute("message", "Выбранное место уже занято, выберите другое!");
             return "errors/404";
         }
 
+//        // Создание билета
+//        Ticket ticket = new Ticket(sessionId, row, place, userId);
+//        ticketService.save(ticket);
+
         // Создание билета
-        Ticket ticket = new Ticket(sessionId, row, place);
-        ticketService.save(ticket);
+//        Ticket ticket = new Ticket(sessionId, row, place, userId);
+        ticketService.save(sessionId, row, place, userId);
 
         // Перенаправление на страницу успешной покупки
         return "redirect:/tickets/success";

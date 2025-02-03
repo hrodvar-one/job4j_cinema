@@ -7,13 +7,14 @@ import java.util.Optional;
 
 public interface TicketRepository {
 
-    Optional<Ticket> save(Ticket ticket);
+//    Optional<Ticket> save(Ticket ticket);
+    Optional<Ticket> save(int sessionId, int row, int place, int userId);
 
     Optional<Ticket> getById(int id);
 
 //    boolean isPlaceTaken(int sessionId, int rowNumber, int placeNumber);
 
-    boolean isSeatAvailable(int sessionId, int row, int place);
+    boolean isSeatAvailable(int sessionId, int row, int place, int userId);
 
     List<Ticket> getTicketsBySessionId(int sessionId);
 

@@ -20,16 +20,18 @@ public class SimpleTicketService implements TicketService {
         this.filmSessionService = filmSessionService;
     }
 
-//    @Override
-//    public Optional<Ticket> save(int sessionId, int rowNumber, int placeNumber, int userId) {
+    @Override
+    public Optional<Ticket> save(int sessionId, int rowNumber, int placeNumber, int userId) {
 //        if (filmSessionService.isPlaceTaken(sessionId, rowNumber, placeNumber)) {
-//            return Optional.empty();
-//        }
-//
+        if (isSeatAvailable(sessionId, rowNumber, placeNumber, userId)) {
+            return Optional.empty();
+        }
+
 //        Ticket ticket = new Ticket(0, sessionId, rowNumber, placeNumber, userId);
-//
-//        return ticketRepository.save(ticket);
-//    }
+//        Ticket ticket = new Ticket(sessionId, rowNumber, placeNumber, userId);
+
+        return ticketRepository.save(sessionId, rowNumber, placeNumber, userId);
+    }
 
     @Override
     public Optional<TicketDto> getById(int id) {
@@ -59,8 +61,8 @@ public class SimpleTicketService implements TicketService {
     }
 
     @Override
-    public boolean isSeatAvailable(int sessionId, int row, int place) {
-        return ticketRepository.isSeatAvailable(sessionId, row, place);
+    public boolean isSeatAvailable(int sessionId, int row, int place, int userId) {
+        return ticketRepository.isSeatAvailable(sessionId, row, place, userId);
     }
 
     @Override

@@ -8,11 +8,11 @@ import java.util.Optional;
 
 public interface TicketService {
 
-//    Optional<Ticket> save(int sessionId, int rowNumber, int placeNumber, int userId);
+    Optional<Ticket> save(int sessionId, int rowNumber, int placeNumber, int userId);
 
     Optional<TicketDto> getById(int id);
 
-    boolean isSeatAvailable(int sessionId, int row, int place);
+    boolean isSeatAvailable(int sessionId, int row, int place, int userId);
 
     List<TicketDto> getTicketsBySessionId(int sessionId);
 
