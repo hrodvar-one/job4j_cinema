@@ -1,12 +1,25 @@
 <div th:fragment="header">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
+            <!-- Логотип -->
             <a class="navbar-brand" href="/">Кинотеатр</a>
-            <div class="collapse navbar-collapse">
-                <div class="navbar-nav me-auto">
+
+            <!-- Кнопка для мобильного меню -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Основное меню -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav">
                     <a class="nav-item nav-link" th:href="@{/sessions}">Расписание</a>
                     <a class="nav-item nav-link" th:href="@{/films}">Кинотека</a>
                 </div>
+            </div>
+
+            <!-- Отдельный блок справа -->
+            <div class="navbar-nav ms-auto">
                 <div class="d-flex" th:if="${user.fullName == 'Гость'}">
                     <a class="nav-link text-secondary me-3" th:href="@{/users/register}">Регистрация</a>
                     <a class="nav-link text-secondary" th:href="@{/users/login}">Войти</a>

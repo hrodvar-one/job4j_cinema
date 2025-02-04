@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 import org.sql2o.Connection;
 import org.sql2o.Query;
 import org.sql2o.Sql2o;
-import ru.job4j.cinema.model.FilmSession;
 import ru.job4j.cinema.model.Hall;
 
 import java.util.Optional;
@@ -27,19 +26,4 @@ public class Sql2oHallRepository implements HallRepository {
             return Optional.ofNullable(hall);
         }
     }
-
-//    @Override
-//    public Optional<Hall> getById(int id) {
-//        try (Connection connection = sql2o.open()) {
-//            // SQL-запрос с подзапросом для извлечения halls_id из film_sessions
-//            Query query = connection.createQuery(
-//                    "SELECT * FROM halls WHERE id = ("
-//                            + "   SELECT halls_id FROM film_sessions WHERE id = :id"
-//                            + ")"
-//            );
-//            query.addParameter("id", id);
-//            Hall hall = query.setColumnMappings(Hall.COLUMN_MAPPING).executeAndFetchFirst(Hall.class);
-//            return Optional.ofNullable(hall);
-//        }
-//    }
 }

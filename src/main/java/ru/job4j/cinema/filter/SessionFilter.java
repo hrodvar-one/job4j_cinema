@@ -16,22 +16,6 @@ import java.io.IOException;
 @Order(2)
 public class SessionFilter extends HttpFilter {
 
-//    @Override
-//    protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-//        var session = request.getSession();
-//        addUserToSession(session, request);
-//        chain.doFilter(request, response);
-//    }
-//
-//    private void addUserToSession(HttpSession session, HttpServletRequest request) {
-//        var user = (User) session.getAttribute("user");
-//        if (user == null) {
-//            user = new User();
-//            user.setFullName("Гость");
-//        }
-//        request.setAttribute("user", user);
-//    }
-
     @Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         var session = request.getSession();
