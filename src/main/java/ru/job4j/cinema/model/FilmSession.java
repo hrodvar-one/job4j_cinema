@@ -1,5 +1,6 @@
 package ru.job4j.cinema.model;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Objects;
@@ -64,16 +65,16 @@ public class FilmSession {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
+    public void setStartTime(Timestamp startTime) {
+        this.startTime = startTime.toLocalDateTime();
     }
 
     public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
+    public void setEndTime(Timestamp endTime) {
+        this.endTime = endTime.toLocalDateTime();
     }
 
     public int getPrice() {

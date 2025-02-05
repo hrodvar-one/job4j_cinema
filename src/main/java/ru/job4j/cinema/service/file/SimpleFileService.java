@@ -47,7 +47,7 @@ public class SimpleFileService implements FileService {
         try {
             return Files.readAllBytes(Path.of(path));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Ошибка чтения файла: " + path, e);
         }
     }
 }

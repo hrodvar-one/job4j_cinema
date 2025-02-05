@@ -20,7 +20,10 @@ public class Sql2oGenreRepository implements GenreRepository {
 
     @Override
     public List<Genre> getAll() {
-        return List.of();
+        try (Connection con = sql2o.open()) {
+            Query query = con.createQuery("SELECT * FROM genres");
+            return query.setColumnMappings(Genre.COLUMN_MAPPING).executeAndFetch(Genre.class);
+        }
     }
 
     @Override
