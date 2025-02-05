@@ -43,7 +43,7 @@ public class TicketController {
         if (ticket.isPresent()) {
             redirectAttributes.addFlashAttribute("row", row);
             redirectAttributes.addFlashAttribute("place", place);
-            return "redirect:/tickets/success"; // Перенаправление
+            return "redirect:/tickets/success";
         } else {
             model.addAttribute("message", "Данное выбранное место уже занято, выберите другое!");
             return "errors/404";

@@ -78,7 +78,7 @@ class Sql2oFilmSessionRepositoryTest {
     @Order(1)
     void whenGetAllThenReturnFilmSessionList() {
         List<FilmSession> sessions = sessionRepository.getAll();
-        assertEquals(1, sessions.size()); // Ожидаем одну запись
+        assertEquals(1, sessions.size());
         assertEquals(1, sessions.get(0).getFilmId());
         assertEquals(1, sessions.get(0).getHallsId());
         assertEquals(LocalDateTime.of(2025, 2, 5, 10, 0), sessions.get(0).getStartTime());
