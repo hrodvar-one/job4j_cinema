@@ -32,7 +32,6 @@ public class TicketController {
                             RedirectAttributes redirectAttributes
                             ) {
 
-        // Проверка существования сеанса
         Optional<FilmSession> filmSessionOptional = filmSessionService.getFilmSessionById(sessionId);
         if (filmSessionOptional.isEmpty()) {
             model.addAttribute("message", "Данный сеанс не найден!");
@@ -42,7 +41,6 @@ public class TicketController {
         Optional<Ticket> ticket = ticketService.save(sessionId, row, place, userId);
 
         if (ticket.isPresent()) {
-            // Добавляем атрибуты, которые будут доступны после редиректа
             redirectAttributes.addFlashAttribute("row", row);
             redirectAttributes.addFlashAttribute("place", place);
             return "redirect:/tickets/success"; // Перенаправление

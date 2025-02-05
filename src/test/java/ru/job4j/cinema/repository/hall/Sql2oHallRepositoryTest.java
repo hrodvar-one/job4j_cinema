@@ -44,17 +44,14 @@ class Sql2oHallRepositoryTest {
     @BeforeEach
     void clearAndPopulateDatabase() {
         try (Connection con = sql2o.open()) {
-            // Отключаем проверку ссылочной целостности
+
             con.createQuery("SET REFERENTIAL_INTEGRITY FALSE").executeUpdate();
 
-            // Очищаем связанные таблицы перед удалением залов
             con.createQuery("DELETE FROM film_sessions").executeUpdate();
             con.createQuery("DELETE FROM halls").executeUpdate();
 
-            // Включаем обратно проверку ссылочной целостности
             con.createQuery("SET REFERENTIAL_INTEGRITY TRUE").executeUpdate();
 
-            // Вставляем тестовые данные
             con.createQuery("INSERT INTO halls (id, name, row_count, place_count, description) "
                             + "VALUES (1, 'Main Hall', 10, 20, 'The biggest hall')")
                     .executeUpdate();

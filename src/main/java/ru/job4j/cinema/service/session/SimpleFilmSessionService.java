@@ -32,19 +32,16 @@ public class SimpleFilmSessionService implements FilmSessionService {
     public List<FilmSessionDto> getAll() {
         List<FilmSession> filmSessions = filmSessionRepository.getAll();
 
-        // Преобразуем List<FilmSession> в List<FilmSessionDto>
         return filmSessions.stream()
                 .map(filmSession -> {
-                    // Извлекаем filmName и hallName из Optional
                     String filmName = filmRepository.getById(filmSession.getFilmId())
-                            .map(Film::getName) // Извлекаем имя из Optional<Film>
-                            .orElse("Unknown Film"); // Значение по умолчанию, если Film не найден
+                            .map(Film::getName)
+                            .orElse("Unknown Film");
 
                     String hallName = hallRepository.getById(filmSession.getHallsId())
-                            .map(Hall::getName) // Извлекаем имя из Optional<Hall>
-                            .orElse("Unknown Hall"); // Значение по умолчанию, если Hall не найден
+                            .map(Hall::getName)
+                            .orElse("Unknown Hall");
 
-                    // Создаем DTO
                     FilmSessionDto dto = new FilmSessionDto();
                     dto.setId(filmSession.getId());
                     dto.setFilmName(filmName);
@@ -53,9 +50,9 @@ public class SimpleFilmSessionService implements FilmSessionService {
                     dto.setEndTime(filmSession.getEndTime());
                     dto.setPrice(filmSession.getPrice());
 
-                    return dto; // Возвращаем готовый DTO
+                    return dto;
                 })
-                .collect(Collectors.toList()); // Сохраняем все DTO в список
+                .collect(Collectors.toList());
     }
 
     @Override

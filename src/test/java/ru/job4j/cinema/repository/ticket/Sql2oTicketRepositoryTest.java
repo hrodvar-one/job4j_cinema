@@ -55,7 +55,6 @@ class Sql2oTicketRepositoryTest {
 
             con.createQuery("SET REFERENTIAL_INTEGRITY TRUE").executeUpdate();
 
-            // Вставляем тестовые данные
             con.createQuery("INSERT INTO files (id, name, path) VALUES (1, 'Poster', '/path/to/poster.jpg')")
                     .executeUpdate();
 

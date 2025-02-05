@@ -30,10 +30,8 @@ public class SessionFilter extends HttpFilter {
             user.setFullName("Гость");
         }
 
-        // Добавляем пользователя в request, чтобы Thymeleaf мог его использовать
         request.setAttribute("user", user);
 
-        // Добавляем id пользователя отдельно, если он залогинен
         if (user.getId() > 0) {
             request.setAttribute("userId", user.getId());
         }

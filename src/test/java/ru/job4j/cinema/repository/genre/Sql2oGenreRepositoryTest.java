@@ -44,17 +44,14 @@ class Sql2oGenreRepositoryTest {
     @BeforeEach
     void clearAndPopulateDatabase() {
         try (Connection con = sql2o.open()) {
-            // Отключаем проверку ссылочной целостности
+
             con.createQuery("SET REFERENTIAL_INTEGRITY FALSE").executeUpdate();
 
-            // Очищаем связанные таблицы перед удалением жанров
             con.createQuery("DELETE FROM films").executeUpdate();
             con.createQuery("DELETE FROM genres").executeUpdate();
 
-            // Включаем обратно проверку ссылочной целостности
             con.createQuery("SET REFERENTIAL_INTEGRITY TRUE").executeUpdate();
 
-            // Вставляем тестовые данные
             con.createQuery("INSERT INTO genres (id, name) VALUES (1, 'Action')").executeUpdate();
             con.createQuery("INSERT INTO genres (id, name) VALUES (2, 'Comedy')").executeUpdate();
         }
@@ -74,7 +71,7 @@ class Sql2oGenreRepositoryTest {
     @Order(2)
     void whenGetAllAndTableIsEmptyThenReturnEmptyList() {
         try (Connection con = sql2o.open()) {
-            // Очищаем сначала films, затем genres
+
             con.createQuery("DELETE FROM films").executeUpdate();
             con.createQuery("DELETE FROM genres").executeUpdate();
         }

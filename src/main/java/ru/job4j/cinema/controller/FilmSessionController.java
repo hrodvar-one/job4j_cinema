@@ -37,7 +37,6 @@ public class FilmSessionController {
     public String getById(Model model, @PathVariable int id) {
         Optional<FilmSessionDto> filmSessionDtoOptional = filmSessionService.getById(id);
 
-        // Проверка наличия FilmSession
         if (filmSessionDtoOptional.isEmpty()) {
             model.addAttribute("message", "Данного сеанса не существует, выберите другой!");
             return "errors/404";
@@ -47,7 +46,6 @@ public class FilmSessionController {
 
         Optional<FilmSession> filmSessionOptional = filmSessionService.getFilmSessionById(id);
 
-        // Проверка наличия FilmSession
         if (filmSessionOptional.isEmpty()) {
             model.addAttribute("message", "Данного сеанса не существует, выберите другой!");
             return "errors/404";
@@ -66,15 +64,12 @@ public class FilmSessionController {
 
         Hall hall = hallOptional.get();
 
-        // Генерация рядов и мест
         List<Integer> rows = IntStream.rangeClosed(1, hall.getRowCount())
                 .boxed()
                 .toList();
         List<Integer> places = IntStream.rangeClosed(1, hall.getPlaceCount())
                 .boxed()
                 .toList();
-
-        // Добавление атрибутов в модель
 
         model.addAttribute("sessionId", filmSessionDto.getId());
 

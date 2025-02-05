@@ -42,10 +42,9 @@ class Sql2oFilmRepositoryTest {
     @BeforeEach
     void clearAndPopulateDatabase() {
         try (Connection con = sql2o.open()) {
-            // Отключаем проверку ссылочной целостности
+
             con.createQuery("SET REFERENTIAL_INTEGRITY FALSE").executeUpdate();
 
-            // Удаляем все связанные данные
             con.createQuery("DELETE FROM tickets").executeUpdate();
             con.createQuery("DELETE FROM film_sessions").executeUpdate();
             con.createQuery("DELETE FROM films").executeUpdate();
@@ -54,10 +53,8 @@ class Sql2oFilmRepositoryTest {
             con.createQuery("DELETE FROM halls").executeUpdate();
             con.createQuery("DELETE FROM users").executeUpdate();
 
-            // Включаем обратно проверку ссылочной целостности
             con.createQuery("SET REFERENTIAL_INTEGRITY TRUE").executeUpdate();
 
-            // Вставляем тестовые данные
             con.createQuery("INSERT INTO genres (id, name) VALUES (1, 'Action')").executeUpdate();
             con.createQuery("INSERT INTO files (id, name, path) VALUES (1, 'poster.jpg', '/images/poster.jpg')").executeUpdate();
             con.createQuery("INSERT INTO films (id, name, description, \"year\", genre_id, minimal_age, duration_in_minutes, file_id) "

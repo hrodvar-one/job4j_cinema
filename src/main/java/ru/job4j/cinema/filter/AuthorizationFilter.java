@@ -15,14 +15,12 @@ import java.util.Set;
 @Order(1)
 public class AuthorizationFilter extends HttpFilter {
 
-    // URL, требующий авторизации
     private static final Set<String> PROTECTED_URLS = Set.of("/tickets/buy");
 
     @Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         var uri = request.getRequestURI();
 
-        // Проверяем, нужно ли запрашивать авторизацию
         if (requiresAuthorization(uri)) {
             var userLoggedIn = request.getSession().getAttribute("user") != null;
             if (!userLoggedIn) {

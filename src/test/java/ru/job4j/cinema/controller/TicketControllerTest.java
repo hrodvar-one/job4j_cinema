@@ -37,7 +37,7 @@ class TicketControllerTest {
 
     @Test
     void whenBuyTicketSuccessfullyThenRedirectToSuccess() {
-        // Arrange
+
         int sessionId = 1, row = 5, place = 8, userId = 123;
         FilmSession filmSession = new FilmSession(sessionId, 10, 2, null, null, 500);
         Ticket ticket = new Ticket(1, sessionId, row, place, userId);
@@ -45,10 +45,8 @@ class TicketControllerTest {
         when(filmSessionService.getFilmSessionById(sessionId)).thenReturn(Optional.of(filmSession));
         when(ticketService.save(sessionId, row, place, userId)).thenReturn(Optional.of(ticket));
 
-        // Act
         String viewName = ticketController.buyTicket(sessionId, row, place, userId, model, redirectAttributes);
 
-        // Assert
         assertEquals("redirect:/tickets/success", viewName);
         verify(redirectAttributes, times(1)).addFlashAttribute("row", row);
         verify(redirectAttributes, times(1)).addFlashAttribute("place", place);
@@ -56,17 +54,15 @@ class TicketControllerTest {
 
     @Test
     void whenBuyTicketFailsBecausePlaceIsTakenThenReturnError404() {
-        // Arrange
+
         int sessionId = 1, row = 5, place = 8, userId = 123;
         FilmSession filmSession = new FilmSession(sessionId, 10, 2, null, null, 500);
 
         when(filmSessionService.getFilmSessionById(sessionId)).thenReturn(Optional.of(filmSession));
         when(ticketService.save(sessionId, row, place, userId)).thenReturn(Optional.empty());
 
-        // Act
         String viewName = ticketController.buyTicket(sessionId, row, place, userId, model, redirectAttributes);
 
-        // Assert
         assertEquals("errors/404", viewName);
         verify(model, times(1)).addAttribute("message",
                 "Данное выбранное место уже занято, выберите другое!");
@@ -74,15 +70,13 @@ class TicketControllerTest {
 
     @Test
     void whenBuyTicketFailsBecauseSessionNotFoundThenReturnError404() {
-        // Arrange
+
         int sessionId = 1, row = 5, place = 8, userId = 123;
 
         when(filmSessionService.getFilmSessionById(sessionId)).thenReturn(Optional.empty());
 
-        // Act
         String viewName = ticketController.buyTicket(sessionId, row, place, userId, model, redirectAttributes);
 
-        // Assert
         assertEquals("errors/404", viewName);
         verify(model, times(1)).addAttribute("message",
                 "Данный сеанс не найден!");
@@ -90,19 +84,17 @@ class TicketControllerTest {
 
     @Test
     void whenSuccessPageThenReturnSuccessView() {
-        // Act
+
         String viewName = ticketController.successPage();
 
-        // Assert
         assertEquals("tickets/success", viewName);
     }
 
     @Test
     void whenSuccessPageThenViewShouldNotBeNullOrUnexpected() {
-        // Act
+
         String viewName = ticketController.successPage();
 
-        // Assert
         assertNotNull(viewName);
         assertNotEquals("wrongView", viewName);
     }

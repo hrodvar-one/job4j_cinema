@@ -32,62 +32,50 @@ class SimpleUserServiceTest {
         testUser = new User(1, "John Doe", "john.doe@example.com", "password123");
     }
 
-    // ✅ Успешный тест для save()
     @Test
     void whenSaveUserThenReturnUser() {
-        // Arrange
+
         when(userRepository.save(testUser)).thenReturn(Optional.of(testUser));
 
-        // Act
         Optional<User> result = simpleUserService.save(testUser);
 
-        // Assert
         assertTrue(result.isPresent());
         assertEquals(testUser, result.get());
         verify(userRepository).save(testUser);
     }
 
-    // ❌ Неуспешный тест для save()
     @Test
     void whenSaveUserFailsThenReturnEmpty() {
-        // Arrange
+
         when(userRepository.save(testUser)).thenReturn(Optional.empty());
 
-        // Act
         Optional<User> result = simpleUserService.save(testUser);
 
-        // Assert
         assertTrue(result.isEmpty());
         verify(userRepository).save(testUser);
     }
 
-    // ✅ Успешный тест для findByEmailAndPassword()
     @Test
     void whenFindByEmailAndPasswordThenReturnUser() {
-        // Arrange
+
         when(userRepository.findByEmailAndPassword("john.doe@example.com", "password123"))
                 .thenReturn(Optional.of(testUser));
 
-        // Act
         Optional<User> result = simpleUserService.findByEmailAndPassword("john.doe@example.com", "password123");
 
-        // Assert
         assertTrue(result.isPresent());
         assertEquals(testUser, result.get());
         verify(userRepository).findByEmailAndPassword("john.doe@example.com", "password123");
     }
 
-    // ❌ Неуспешный тест для findByEmailAndPassword()
     @Test
     void whenFindByEmailAndPasswordFailsThenReturnEmpty() {
-        // Arrange
+
         when(userRepository.findByEmailAndPassword("wrong.email@example.com", "wrongpassword"))
                 .thenReturn(Optional.empty());
 
-        // Act
         Optional<User> result = simpleUserService.findByEmailAndPassword("wrong.email@example.com", "wrongpassword");
 
-        // Assert
         assertTrue(result.isEmpty());
         verify(userRepository).findByEmailAndPassword("wrong.email@example.com", "wrongpassword");
     }

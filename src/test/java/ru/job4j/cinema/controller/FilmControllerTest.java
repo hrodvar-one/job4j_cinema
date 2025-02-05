@@ -28,7 +28,7 @@ class FilmControllerTest {
 
     @Test
     void whenFilmsExistThenReturnViewWithFilms() {
-        // Arrange
+
         List<FilmDto> films = List.of(
                 new FilmDto(1,
                         "Film1",
@@ -52,10 +52,8 @@ class FilmControllerTest {
 
         when(filmService.getAll()).thenReturn(films);
 
-        // Act
         String viewName = filmController.getAll(model);
 
-        // Assert
         assertEquals("films/filmlist", viewName);
         verify(model, times(1)).addAttribute("films", films);
         verify(filmService, times(1)).getAll();
@@ -63,13 +61,11 @@ class FilmControllerTest {
 
     @Test
     void whenNoFilmsThenReturnViewWithEmptyList() {
-        // Arrange
+
         when(filmService.getAll()).thenReturn(List.of());
 
-        // Act
         String viewName = filmController.getAll(model);
 
-        // Assert
         assertEquals("films/filmlist", viewName);
         verify(model, times(1)).addAttribute("films", List.of());
         verify(filmService, times(1)).getAll();

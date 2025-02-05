@@ -46,10 +46,9 @@ class Sql2oFilmSessionRepositoryTest {
     @BeforeEach
     void clearAndPopulateDatabase() {
         try (Connection con = sql2o.open()) {
-            // Отключаем проверку ссылочной целостности
+
             con.createQuery("SET REFERENTIAL_INTEGRITY FALSE").executeUpdate();
 
-            // Очищаем таблицы в правильном порядке
             con.createQuery("DELETE FROM tickets").executeUpdate();
             con.createQuery("DELETE FROM film_sessions").executeUpdate();
             con.createQuery("DELETE FROM films").executeUpdate();
@@ -57,10 +56,8 @@ class Sql2oFilmSessionRepositoryTest {
             con.createQuery("DELETE FROM genres").executeUpdate();
             con.createQuery("DELETE FROM files").executeUpdate();
 
-            // Включаем проверку ссылочной целостности обратно
             con.createQuery("SET REFERENTIAL_INTEGRITY TRUE").executeUpdate();
 
-            // Вставляем тестовые данные
             con.createQuery("INSERT INTO files (id, name, path) VALUES (1, 'Poster', '/path/to/poster.jpg')")
                     .executeUpdate();
             con.createQuery("INSERT INTO genres (id, name) VALUES (1, 'Action')")

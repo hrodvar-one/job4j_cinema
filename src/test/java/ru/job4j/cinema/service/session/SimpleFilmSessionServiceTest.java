@@ -52,15 +52,13 @@ class SimpleFilmSessionServiceTest {
 
     @Test
     void whenGetAllThenReturnFilmSessionDtoList() {
-        // Arrange
+
         when(filmSessionRepository.getAll()).thenReturn(List.of(testSession));
         when(filmRepository.getById(1)).thenReturn(Optional.of(testFilm));
         when(hallRepository.getById(1)).thenReturn(Optional.of(testHall));
 
-        // Act
         List<FilmSessionDto> result = simpleFilmSessionService.getAll();
 
-        // Assert
         assertEquals(1, result.size());
         assertEquals(testSession.getId(), result.get(0).getId());
         assertEquals("Test Film", result.get(0).getFilmName());
@@ -72,27 +70,23 @@ class SimpleFilmSessionServiceTest {
 
     @Test
     void whenGetAllAndNoSessionsThenReturnEmptyList() {
-        // Arrange
+
         when(filmSessionRepository.getAll()).thenReturn(List.of());
 
-        // Act
         List<FilmSessionDto> result = simpleFilmSessionService.getAll();
 
-        // Assert
         assertTrue(result.isEmpty());
     }
 
     @Test
     void whenGetByIdThenReturnFilmSessionDto() {
-        // Arrange
+
         when(filmSessionRepository.getById(1)).thenReturn(Optional.of(testSession));
         when(filmRepository.getById(1)).thenReturn(Optional.of(testFilm));
         when(hallRepository.getById(1)).thenReturn(Optional.of(testHall));
 
-        // Act
         Optional<FilmSessionDto> result = simpleFilmSessionService.getById(1);
 
-        // Assert
         assertTrue(result.isPresent());
         assertEquals("Test Film", result.get().getFilmName());
         assertEquals("Main Hall", result.get().getHallName());
@@ -103,38 +97,32 @@ class SimpleFilmSessionServiceTest {
 
     @Test
     void whenGetByIdAndNotFoundThenReturnEmpty() {
-        // Arrange
+
         when(filmSessionRepository.getById(2)).thenReturn(Optional.empty());
 
-        // Act
         Optional<FilmSessionDto> result = simpleFilmSessionService.getById(2);
 
-        // Assert
         assertFalse(result.isPresent());
     }
 
     @Test
     void whenGetFilmSessionByIdThenReturnFilmSession() {
-        // Arrange
+
         when(filmSessionRepository.getById(1)).thenReturn(Optional.of(testSession));
 
-        // Act
         Optional<FilmSession> result = simpleFilmSessionService.getFilmSessionById(1);
 
-        // Assert
         assertTrue(result.isPresent());
         assertEquals(testSession, result.get());
     }
 
     @Test
     void whenGetFilmSessionByIdAndNotFoundThenReturnEmpty() {
-        // Arrange
+
         when(filmSessionRepository.getById(2)).thenReturn(Optional.empty());
 
-        // Act
         Optional<FilmSession> result = simpleFilmSessionService.getFilmSessionById(2);
 
-        // Assert
         assertFalse(result.isPresent());
     }
 }

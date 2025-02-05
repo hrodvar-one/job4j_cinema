@@ -36,7 +36,7 @@ class FilmSessionControllerTest {
 
     @Test
     void whenGetAllThenReturnSheduleViewWithFilmSessions() {
-        // Arrange
+
         List<FilmSessionDto> filmSessions = List.of(
                 new FilmSessionDto(1,
                         "Film1",
@@ -53,10 +53,8 @@ class FilmSessionControllerTest {
         );
         when(filmSessionService.getAll()).thenReturn(filmSessions);
 
-        // Act
         String viewName = filmSessionController.getAll(model);
 
-        // Assert
         assertEquals("shedules/shedule", viewName);
         verify(model, times(1)).addAttribute("filmSessions", filmSessions);
         verify(filmSessionService, times(1)).getAll();
@@ -64,7 +62,7 @@ class FilmSessionControllerTest {
 
     @Test
     void whenGetByIdAndSessionExistsThenReturnTicketBuyView() {
-        // Arrange
+
         int sessionId = 1;
         int hallId = 1;
         FilmSessionDto filmSessionDto = new FilmSessionDto(sessionId,
@@ -88,10 +86,8 @@ class FilmSessionControllerTest {
         when(filmSessionService.getFilmSessionById(sessionId)).thenReturn(Optional.of(filmSession));
         when(hallService.getById(hallId)).thenReturn(Optional.of(hall));
 
-        // Act
         String viewName = filmSessionController.getById(model, sessionId);
 
-        // Assert
         assertEquals("tickets/buy", viewName);
         verify(model, times(1)).addAttribute("sessionId", sessionId);
         verify(model, times(1)).addAttribute("filmName",
@@ -106,14 +102,12 @@ class FilmSessionControllerTest {
 
     @Test
     void whenGetByIdAndSessionDoesNotExistThenReturnError404() {
-        // Arrange
+
         int sessionId = 1;
         when(filmSessionService.getById(sessionId)).thenReturn(Optional.empty());
 
-        // Act
         String viewName = filmSessionController.getById(model, sessionId);
 
-        // Assert
         assertEquals("errors/404", viewName);
         verify(model, times(1)).addAttribute("message",
                                                         "Данного сеанса не существует, выберите другой!");

@@ -25,17 +25,15 @@ class FileControllerTest {
 
     @Test
     void whenFileExistsThenReturnFileContent() {
-        // Arrange
+
         int fileId = 1;
         byte[] fileContent = "test content".getBytes();
         FileDto fileDto = new FileDto("test.txt", fileContent);
 
         when(fileService.getById(fileId)).thenReturn(Optional.of(fileDto));
 
-        // Act
         ResponseEntity<?> response = fileController.getById(fileId);
 
-        // Assert
         assertEquals(200, response.getStatusCodeValue());
         assertArrayEquals(fileContent, (byte[]) response.getBody());
         verify(fileService, times(1)).getById(fileId);
@@ -43,14 +41,12 @@ class FileControllerTest {
 
     @Test
     void whenFileDoesNotExistThenReturnNotFound() {
-        // Arrange
+
         int fileId = 1;
         when(fileService.getById(fileId)).thenReturn(Optional.empty());
 
-        // Act
         ResponseEntity<?> response = fileController.getById(fileId);
 
-        // Assert
         assertEquals(404, response.getStatusCodeValue());
         assertNull(response.getBody());
         verify(fileService, times(1)).getById(fileId);

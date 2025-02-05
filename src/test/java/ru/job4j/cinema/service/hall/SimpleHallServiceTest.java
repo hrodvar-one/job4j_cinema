@@ -24,7 +24,7 @@ class SimpleHallServiceTest {
 
     @Test
     void whenGetByIdThenReturnHall() {
-        // Arrange
+
         Hall expectedHall = new Hall(1,
                 "Main Hall",
                 5,
@@ -32,10 +32,8 @@ class SimpleHallServiceTest {
                 "Large hall with a big screen");
         when(hallRepository.getById(1)).thenReturn(Optional.of(expectedHall));
 
-        // Act
         Optional<Hall> result = simpleHallService.getById(1);
 
-        // Assert
         assertTrue(result.isPresent());
         assertEquals(expectedHall, result.get());
         verify(hallRepository, times(1)).getById(1);
@@ -43,13 +41,11 @@ class SimpleHallServiceTest {
 
     @Test
     void whenGetByIdAndHallNotFoundThenReturnEmpty() {
-        // Arrange
+
         when(hallRepository.getById(2)).thenReturn(Optional.empty());
 
-        // Act
         Optional<Hall> result = simpleHallService.getById(2);
 
-        // Assert
         assertFalse(result.isPresent());
         verify(hallRepository, times(1)).getById(2);
     }

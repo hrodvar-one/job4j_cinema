@@ -47,7 +47,6 @@ class Sql2oUserRepositoryTest {
             con.createQuery("DELETE FROM users").executeUpdate();
             con.createQuery("SET REFERENTIAL_INTEGRITY TRUE").executeUpdate();
 
-            // Вставляем пользователя без явного указания id (автоинкремент)
             con.createQuery("INSERT INTO users (full_name, email, password) "
                             + "VALUES ('Test User', 'test@example.com', 'password123')")
                     .executeUpdate();

@@ -42,10 +42,9 @@ class Sql2oFileRepositoryTest {
     @BeforeEach
     void clearAndPopulateDatabase() {
         try (Connection con = sql2o.open()) {
-            // Отключаем проверку ссылочной целостности
+
             con.createQuery("SET REFERENTIAL_INTEGRITY FALSE").executeUpdate();
 
-            // Удаляем все данные из зависимых таблиц
             con.createQuery("DELETE FROM tickets").executeUpdate();
             con.createQuery("DELETE FROM film_sessions").executeUpdate();
             con.createQuery("DELETE FROM films").executeUpdate();
@@ -54,7 +53,6 @@ class Sql2oFileRepositoryTest {
             con.createQuery("DELETE FROM halls").executeUpdate();
             con.createQuery("DELETE FROM users").executeUpdate();
 
-            // Включаем обратно проверку ссылочной целостности
             con.createQuery("SET REFERENTIAL_INTEGRITY TRUE").executeUpdate();
 
             String sql = "INSERT INTO files (id, name, path) VALUES (1, 'test_file.txt', '/path/to/test_file.txt')";

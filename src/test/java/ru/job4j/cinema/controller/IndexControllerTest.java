@@ -15,19 +15,17 @@ class IndexControllerTest {
 
     @Test
     void whenGetIndexThenReturnIndexView() {
-        // Act
+
         String viewName = indexController.getIndex();
 
-        // Assert
         assertEquals("index", viewName);
     }
 
     @Test
     void whenGetIndexThenViewShouldNotBeNullOrUnexpected() {
-        // Act
+
         String viewName = indexController.getIndex();
 
-        // Assert
         assertNotNull(viewName);
         assertNotEquals("wrongView", viewName);
     }

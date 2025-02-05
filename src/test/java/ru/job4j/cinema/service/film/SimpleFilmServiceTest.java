@@ -67,16 +67,14 @@ class SimpleFilmServiceTest {
 
     @Test
     void whenGetAllThenReturnFilmDtoList() {
-        // Arrange
+
         List<Film> films = List.of(testFilm);
         when(filmRepository.getAll()).thenReturn(films);
         when(genreRepository.getById(1)).thenReturn(Optional.of(testGenre));
         when(fileRepository.getById(1)).thenReturn(Optional.of(testFile));
 
-        // Act
         List<FilmDto> result = simpleFilmService.getAll();
 
-        // Assert
         assertEquals(expectedFilmDto.getId(), result.get(0).getId());
         assertEquals(expectedFilmDto.getName(), result.get(0).getName());
         assertEquals(expectedFilmDto.getDescription(), result.get(0).getDescription());
@@ -90,27 +88,23 @@ class SimpleFilmServiceTest {
 
     @Test
     void whenGetAllAndNoFilmsThenReturnEmptyList() {
-        // Arrange
+
         when(filmRepository.getAll()).thenReturn(List.of());
 
-        // Act
         List<FilmDto> result = simpleFilmService.getAll();
 
-        // Assert
         assertTrue(result.isEmpty());
     }
 
     @Test
     void whenGetByIdThenReturnFilmDto() {
-        // Arrange
+
         when(filmRepository.getById(1)).thenReturn(Optional.of(testFilm));
         when(genreRepository.getById(1)).thenReturn(Optional.of(testGenre));
         when(fileRepository.getById(1)).thenReturn(Optional.of(testFile));
 
-        // Act
         Optional<FilmDto> result = simpleFilmService.getById(1);
 
-        // Assert
         assertTrue(result.isPresent());
 
         FilmDto actualFilm = result.get();
@@ -127,13 +121,11 @@ class SimpleFilmServiceTest {
 
     @Test
     void whenGetByIdAndFilmNotExistsThenReturnEmptyOptional() {
-        // Arrange
+
         when(filmRepository.getById(2)).thenReturn(Optional.empty());
 
-        // Act
         Optional<FilmDto> result = simpleFilmService.getById(2);
 
-        // Assert
         assertTrue(result.isEmpty());
     }
 }
