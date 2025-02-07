@@ -75,7 +75,6 @@
       <groupId>org.sql2o</groupId>
       <artifactId>sql2o</artifactId>
       <version>1.6.0</version>
-<!--      <version>1.9.1</version>-->
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -137,6 +136,25 @@
             <goals>
               <goal>clearCheckSums</goal>
               <goal>update</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.7</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
             </goals>
           </execution>
         </executions>

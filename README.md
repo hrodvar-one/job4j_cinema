@@ -11,17 +11,24 @@ job4j_cinema - сервис по покупке билетов в кинотеа
 Данные сохраняются в БД.
 
 ### Технологии используемые в проекте:
-- Spring boot
+- Java 17
+- Spring boot 2.7.6
 - Tomcat
-- Thymeleaf
+- Thymeleaf 3.0.15
 - Bootstrap
-- Liquibase
-- PostgreSQL
-- H2
-- Sql2o
+- Liquibase 4.15.0
+- PostgreSQL 42.5.1
+- H2 2.2.220
+- Sql2o 1.6.0
 - Junit5
+- Jacoco 0.8.7
 - AssertJ
 - Mockito
+
+### Требования к окружению:
+- Java 17
+- Maven 3.9.6
+- PostgreSQL 16.3
 
 # Запуск
 
