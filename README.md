@@ -30,6 +30,9 @@ job4j_cinema - сервис по покупке билетов в кинотеа
 - Maven 3.9.6
 - PostgreSQL 16.3
 
+### Процент покрытия тестами:
+![Покрытие тестами](screenshots/test_coverage.png)
+
 # Запуск
 
 1. Создайте Postgres базу данных "cinema" 

@@ -56,21 +56,4 @@ public class Sql2oTicketRepository implements TicketRepository {
             return Optional.ofNullable(ticket);
         }
     }
-
-    @Override
-    public boolean isSeatAvailable(int sessionId, int row, int place, int userId) {
-        try (Connection connection = sql2o.open()) {
-            String sql = """
-                      SELECT COUNT(*) > 0
-                      FROM tickets
-                      WHERE session_id = :sessionId AND row_number = :rowNumber AND place_number = :placeNumber AND user_id = :userId
-                      """;
-            Query query = connection.createQuery(sql)
-                    .addParameter("sessionId", sessionId)
-                    .addParameter("rowNumber", row)
-                    .addParameter("placeNumber", place)
-                    .addParameter("userId", userId);
-            return query.executeScalar(Boolean.class);
-        }
-    }
 }

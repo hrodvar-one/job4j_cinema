@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.job4j.cinema.model.User;
 import ru.job4j.cinema.service.user.UserService;
 
@@ -29,13 +30,14 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String register(Model model, @ModelAttribute User user) {
+    public String register(RedirectAttributes redirectAttributes, @ModelAttribute User user) {
         Optional<User> savedUser = userService.save(user);
         if (savedUser.isEmpty()) {
-            model.addAttribute("message", "Пользователь с такой почтой уже существует");
-            return "errors/404";
+            redirectAttributes.addFlashAttribute("message",
+                                                "Пользователь с такой почтой уже существует");
+            return "redirect:/users/register";
         }
-        return "redirect:/films";
+        return "redirect:/users/login";
     }
 
     @GetMapping("/login")

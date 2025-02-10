@@ -53,7 +53,7 @@ class TicketControllerTest {
     }
 
     @Test
-    void whenBuyTicketFailsBecausePlaceIsTakenThenReturnError404() {
+    void whenBuyTicketFailsBecausePlaceIsTakenThenReturnError409() {
 
         int sessionId = 1, row = 5, place = 8, userId = 123;
         FilmSession filmSession = new FilmSession(sessionId, 10, 2, null, null, 500);
@@ -63,7 +63,7 @@ class TicketControllerTest {
 
         String viewName = ticketController.buyTicket(sessionId, row, place, userId, model, redirectAttributes);
 
-        assertEquals("errors/404", viewName);
+        assertEquals("errors/409", viewName);
         verify(model, times(1)).addAttribute("message",
                 "Данное выбранное место уже занято, выберите другое!");
     }

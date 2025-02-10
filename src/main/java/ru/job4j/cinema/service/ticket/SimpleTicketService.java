@@ -18,10 +18,6 @@ public class SimpleTicketService implements TicketService {
 
     @Override
     public Optional<Ticket> save(int sessionId, int rowNumber, int placeNumber, int userId) {
-        if (isSeatAvailable(sessionId, rowNumber, placeNumber, userId)) {
-            return Optional.empty();
-        }
-
         return ticketRepository.save(sessionId, rowNumber, placeNumber, userId);
     }
 
@@ -36,10 +32,5 @@ public class SimpleTicketService implements TicketService {
             ticketDto.setUserId(ticket.getUserId());
             return ticketDto;
         });
-    }
-
-    @Override
-    public boolean isSeatAvailable(int sessionId, int row, int place, int userId) {
-        return ticketRepository.isSeatAvailable(sessionId, row, place, userId);
     }
 }

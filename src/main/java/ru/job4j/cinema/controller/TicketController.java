@@ -44,10 +44,10 @@ public class TicketController {
             redirectAttributes.addFlashAttribute("row", row);
             redirectAttributes.addFlashAttribute("place", place);
             return "redirect:/tickets/success";
-        } else {
-            model.addAttribute("message", "Данное выбранное место уже занято, выберите другое!");
-            return "errors/404";
         }
+
+        model.addAttribute("message", "Данное выбранное место уже занято, выберите другое!");
+        return "errors/409";
     }
 
     @GetMapping("/success")

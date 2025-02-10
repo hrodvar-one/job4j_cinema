@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.job4j.cinema.model.User;
 import ru.job4j.cinema.service.user.UserService;
 
@@ -22,6 +23,9 @@ class UserControllerTest {
 
     @Mock
     private UserService userService;
+
+    @Mock
+    private RedirectAttributes redirectAttributes;
 
     @Mock
     private Model model;
@@ -44,28 +48,36 @@ class UserControllerTest {
     }
 
     @Test
-    void whenRegisterSuccessfullyThenRedirectToFilms() {
+    void whenRegisterSuccessfullyThenRedirectToLoginPage() {
 
-        User user = new User(1, "John Doe", "john@example.com", "password");
-        when(userService.save(user)).thenReturn(Optional.of(user));
+        User user = new User(1, "Test User", "test@example.com", "password123");
+        Optional<User> savedUser = Optional.of(user);
 
-        String viewName = userController.register(model, user);
+        when(userService.save(any(User.class))).thenReturn(savedUser);
 
-        assertEquals("redirect:/films", viewName);
+        String view = userController.register(redirectAttributes, user);
+
+        assertEquals("redirect:/users/login", view);
         verify(userService, times(1)).save(user);
+        verifyNoInteractions(redirectAttributes);
     }
 
     @Test
-    void whenRegisterFailsThenReturnError404() {
+    void whenRegisterFailsThenRedirectToRegisterPageWithMessage() {
 
-        User user = new User(1, "John Doe", "john@example.com", "password");
-        when(userService.save(user)).thenReturn(Optional.empty());
+        User user = new User(1, "Test User", "test@example.com", "password123");
+        Optional<User> emptyUser = Optional.empty();
 
-        String viewName = userController.register(model, user);
+        when(userService.save(any(User.class))).thenReturn(emptyUser);
 
-        assertEquals("errors/404", viewName);
-        verify(model, times(1)).addAttribute("message",
-                "Пользователь с такой почтой уже существует");
+        String view = userController.register(redirectAttributes, user);
+
+        assertEquals("redirect:/users/register", view);
+
+        verify(redirectAttributes, times(1))
+                .addFlashAttribute("message", "Пользователь с такой почтой уже существует");
+
+        verify(userService, times(1)).save(user);
     }
 
     @Test

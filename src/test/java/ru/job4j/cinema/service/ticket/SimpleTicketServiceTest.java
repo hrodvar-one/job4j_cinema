@@ -32,30 +32,6 @@ class SimpleTicketServiceTest {
     }
 
     @Test
-    void whenSaveSuccessfulThenReturnTicket() {
-
-        when(ticketRepository.isSeatAvailable(1, 5, 10, 1001)).thenReturn(false);
-        when(ticketRepository.save(1, 5, 10, 1001)).thenReturn(Optional.of(testTicket));
-
-        Optional<Ticket> result = simpleTicketService.save(1, 5, 10, 1001);
-
-        assertTrue(result.isPresent());
-        assertEquals(testTicket, result.get());
-        verify(ticketRepository).save(1, 5, 10, 1001);
-    }
-
-    @Test
-    void whenSeatNotAvailableThenReturnEmpty() {
-
-        when(ticketRepository.isSeatAvailable(1, 5, 10, 1001)).thenReturn(true);
-
-        Optional<Ticket> result = simpleTicketService.save(1, 5, 10, 1001);
-
-        assertTrue(result.isEmpty());
-        verify(ticketRepository, never()).save(anyInt(), anyInt(), anyInt(), anyInt());
-    }
-
-    @Test
     void whenGetByIdThenReturnTicketDto() {
 
         when(ticketRepository.getById(1)).thenReturn(Optional.of(testTicket));
@@ -78,25 +54,5 @@ class SimpleTicketServiceTest {
         Optional<TicketDto> result = simpleTicketService.getById(99);
 
         assertTrue(result.isEmpty());
-    }
-
-    @Test
-    void whenSeatAvailableThenReturnTrue() {
-
-        when(ticketRepository.isSeatAvailable(1, 5, 10, 1001)).thenReturn(true);
-
-        boolean result = simpleTicketService.isSeatAvailable(1, 5, 10, 1001);
-
-        assertTrue(result);
-    }
-
-    @Test
-    void whenSeatNotAvailableThenReturnFalse() {
-
-        when(ticketRepository.isSeatAvailable(1, 5, 10, 1001)).thenReturn(false);
-
-        boolean result = simpleTicketService.isSeatAvailable(1, 5, 10, 1001);
-
-        assertFalse(result);
     }
 }

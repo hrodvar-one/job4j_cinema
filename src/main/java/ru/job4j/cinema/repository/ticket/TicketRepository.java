@@ -9,6 +9,4 @@ public interface TicketRepository {
     Optional<Ticket> save(int sessionId, int row, int place, int userId);
 
     Optional<Ticket> getById(int id);
-
-    boolean isSeatAvailable(int sessionId, int row, int place, int userId);
 }

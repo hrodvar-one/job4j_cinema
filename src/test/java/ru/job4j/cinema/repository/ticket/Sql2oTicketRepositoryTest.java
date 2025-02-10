@@ -115,17 +115,4 @@ class Sql2oTicketRepositoryTest {
         Optional<Ticket> ticket = ticketRepository.getById(999);
         assertTrue(ticket.isEmpty());
     }
-
-    @Test
-    @Order(5)
-    void whenIsSeatAvailableAndSeatTakenThenReturnTrue() {
-        ticketRepository.save(1, 2, 3, 1);
-        assertTrue(ticketRepository.isSeatAvailable(1, 2, 3, 1));
-    }
-
-    @Test
-    @Order(6)
-    void whenIsSeatAvailableAndSeatFreeThenReturnFalse() {
-        assertFalse(ticketRepository.isSeatAvailable(1, 2, 4, 1));
-    }
 }
