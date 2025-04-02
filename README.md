@@ -98,4 +98,4 @@ mvn spring-boot:run
 
 ## Контакты
 
-Telegram: @hrodvar
+Telegram: @alex_dev_java
