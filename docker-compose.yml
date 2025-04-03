@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: cinema
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    tmpfs:
+      - /var/lib/postgresql/data
+    command: postgres -c listen_addresses='*'
+
+  liquibase:
+    image: liquibase/liquibase:4.15
+    volumes:
+      - ./db:/liquibase/changelog
+    depends_on:
+      - db
+    working_dir: /liquibase/changelog
+    command: >
+      --url=jdbc:postgresql://db:5432/cinema
+      --username=postgres
+      --password=password
+      --changeLogFile=dbchangelog.xml
+      update
+
+  app:
+    build: .
+    volumes:
+      - ./files:/app/files
+    depends_on:
+      - liquibase
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/cinema
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password

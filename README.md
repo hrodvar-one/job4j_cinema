@@ -24,42 +24,37 @@ job4j_cinema - сервис по покупке билетов в кинотеа
 - Jacoco 0.8.7
 - AssertJ
 - Mockito
+- Docker
+- Docker Compose
 
 ### Требования к окружению:
-- Java 17
-- Maven 3.9.6
-- PostgreSQL 16.3
+- Интернет
+- Docker
+- Docker Compose
 
 ### Процент покрытия тестами:
 ![Покрытие тестами](screenshots/test_coverage.png)
 
 # Запуск
 
-1. Создайте Postgres базу данных "cinema" 
-```
-CREATE DATABASE cinema
-```
+1. Установите и запустите Docker и Docker Compose<br><br>
 
-2. Клонируйте репозиторий
+2. Склонируйте репозиторий
 ```
 git clone https://github.com/hrodvar-one/job4j_cinema
 ```
 
-3. Переходим в папку куда склонировали проект
+3. Перейдите в папку куда склонировали проект
 ```
 cd job4j_cinema
 ```
 
-4. Соберите проект с помощью Maven под профилем "production":
+4. В командной строке из папки выполните команду:
 ```
-mvn clean install -Pproduction
+docker-compose up --build
 ```
-
-5. Запустите приложение:
-```
-mvn spring-boot:run
-```
-После запуска, проект будет доступен по адресу: [http://localhost:8080](http://localhost:8080)
+Дождитесь развёртывания Docker контейнеров.
+Запущенный проект будет доступен по адресу: [http://localhost:8080](http://localhost:8080)
 
 Взаимодействие с приложением:
 
